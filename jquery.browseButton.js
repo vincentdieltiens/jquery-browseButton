@@ -24,7 +24,16 @@
 			var tabIndex = $inputFile.attr('tabindex');
 			
 			// Create the button, put it the tabindex of the inputFile
-			$button = $('<button />').html('browse...')
+			var label = 'browse...';
+			if( options.label ) {
+				if( typeof(options.label) == 'function' ) {
+					label = options.label.call($inputFile);
+				} else if( typeof(options.label) == 'string' ) {
+					label = options.label;
+				}
+			}
+			
+			$button = $('<button />').html(label)
 				.attr('tabindex', tabIndex);
 			
 			// Puts the button after the input file in the dom
@@ -39,8 +48,9 @@
 				'left': '-2000px'
 			});
 		
-		$button.click(function(){
+		$button.click(function() {
 			$inputFile.click();
+			return false;
 		});
 	};
 	
